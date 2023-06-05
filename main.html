@@ -6,7 +6,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="items">
+  <div class="items" onmousedown="handleMouseDown(event)" 
+	  onmousemove="handleMouseMove(event)" 
+	  onmouseup="handleMouseUp()" 
+	  onmouseleave="handleMouseLeave()">
+	  
     <div class="item item1">01</div>
     <div class="item item2">02</div>
     <div class="item item3">03</div>
@@ -35,41 +39,35 @@
   </div>
 
 <script>
-const items = document.querySelector('.items');
-const item = document.querySelector('.item');
 
 let dragging = false;
 let start = 0;
 let scrollLeft = 0;
 
-// mouse down
-items.addEventListener('mousedown', (e) => {
+function handleMouseDown(e) {
   dragging = true;
   start = e.pageX - items.offsetLeft;
   scrollLeft = items.scrollLeft;
   items.classList.add('dragging');
-});
+}
 
-// mouse move 
-items.addEventListener('mousemove', (e) => {
-  if (!dragging) return;
+function handleMouseMove(e) {
+   if (!dragging) return;
   e.preventDefault();
   const currentX = e.pageX - items.offsetLeft;
   const distance = currentX - start;
   items.scrollLeft = scrollLeft - distance;
-});
+}
 
-// mouse up
-items.addEventListener('mouseup', () => {
+function handleMouseUp() {
   dragging = false;
   items.classList.remove('dragging');
-});
+}
 
-// mouse leave
-items.addEventListener('mouseleave', () => {
-  dragging = false;
+function handleMouseLeave() {
+   dragging = false;
   items.classList.remove('dragging');
-});
+}
 
 </script>
 
